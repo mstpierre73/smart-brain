@@ -1,0 +1,14 @@
+.form {
+    width: 700px;
+    background: #04C8DE;
+  }
+
+  .button {
+      background-color: #FF5EDF;
+      border-color: #FF5EDF;
+  }
+
+  .input {
+      border-color: #04C8DE;
+  }
+ 

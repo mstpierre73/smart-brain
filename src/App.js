@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Navigation from './Components/Navigation/Navigation';
 import Logo from './Components/Logo/Logo';
-import ImageLinkForm from './Components/ImageLinkForm';
+import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './Components/FaceRecognition';
+import Rank from './Components/Rank/Rank';
 import './App.css';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         <h1>Image Recognition App</h1>
         <Navigation />
         <Logo />
+        <Rank />
         <ImageLinkForm />
         <FaceRecognition />
       </div>
