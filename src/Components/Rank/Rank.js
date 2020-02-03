@@ -4,7 +4,12 @@ import './Rank.css';
 const Rank = () => {
     return (
         <div className='Rank'>
-
+            <div className='white f3'>
+                {'Marise, your current rank is....'}
+            </div>
+            <div className='white f1'>
+                {'#5'}
+            </div>
         </div>
     );
 }
