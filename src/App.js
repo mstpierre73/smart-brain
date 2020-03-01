@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import dotenv from 'dotenv';
 import Navigation from './Components/Navigation/Navigation';
 import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
@@ -8,9 +9,15 @@ import Particles from 'react-particles-js';
 import './App.css';
 import Clarifai from 'clarifai';
 
+dotenv.config();
+
+console.log(process.env.CLARIFAI_KEY);
+
 const app = new Clarifai.App({
   apiKey: ''
  });
+
+ 
 
 const particlesOptions = {
   particles: {
