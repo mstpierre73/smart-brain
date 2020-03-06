@@ -10,14 +10,12 @@ import './App.css';
 import Clarifai from 'clarifai';
 
 dotenv.config();
-
 console.log(process.env.CLARIFAI_KEY);
+console.log('https://www.realmenrealstyle.com/wp-content/uploads/2012/03/Baby-Face-Cute.jpg');
 
 const app = new Clarifai.App({
-  apiKey: ''
+  apiKey: '83608e32319547a7957d6e45d5e11984'
  });
-
- 
 
 const particlesOptions = {
   particles: {
@@ -36,7 +34,8 @@ class App extends Component {
     super();
     this.state = {
       input: '',
-      image: ''
+      image: '',
+      box: {}
     }
   }
 
@@ -44,20 +43,33 @@ class App extends Component {
     this.setState({input: event.target.value});
   }
 
+  calculateFaceLocation = (data) => {
+    const face = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('input-image');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      leftCol: face.left_col * width,
+      topRow : face.top_row * height,
+      rightCol: width - (face.right_col * width),
+      bottomRow: height - (face.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+  }
+
   onButtonSubmit = () => {
     this.setState({image: this.state.input});
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
-      function(response) {
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-      },
-      function(err) {
-        console.log(err);
-      }
-  );
+    app.models
+    .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+    .catch(err => console.log(err))
   }
 
   render() {
-  return (
+    return (
       <div className="App">
         <Particles className='particles'
           params={ particlesOptions }
@@ -70,7 +82,7 @@ class App extends Component {
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition image={this.state.image}/>
+        <FaceRecognition image={this.state.image} box={this.state.box}/>
       </div>
     );
   }
